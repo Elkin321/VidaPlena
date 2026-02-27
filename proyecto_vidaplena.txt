@@ -1,0 +1,32 @@
+========================================
+  INFORMACIÓN DEL PROYECTO
+========================================
+
+Nombre del proyecto: VidaPlena
+Software de Gestión para Hogares Geriátricos
+
+----------------------------------------
+INTEGRANTES
+----------------------------------------
+
+1. Manuela Suescún Serna
+2. Elkin Darío Ramírez Herrera
+3. Samuel Bastidas Pamplona
+4. Pablo Marín Escobar
+
+----------------------------------------
+INSTITUCIÓN
+----------------------------------------
+
+Institución Universitaria Salazar y Herrera – IUSH
+Profundización Desarrollo Profesional de Soluciones Software
+Profesor: Juan David Fernández Moreno
+Fecha: 26 de febrero de 2026
+
+----------------------------------------
+REPOSITORIO GITHUB
+----------------------------------------
+
+https://github.com/Elkin321/VidaPlena
+
+========================================
