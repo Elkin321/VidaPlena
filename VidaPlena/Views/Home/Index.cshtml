@@ -1,0 +1,159 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="card h-100">
+            <div class="card-body d-flex align-items-center gap-3">
+                <div style="width:50px;height:50px;background:#d8f3dc;border-radius:12px;display:flex;align-items:center;justify-content:center;">
+                    <i class="fas fa-user-injured fa-lg" style="color:#2d6a4f"></i>
+                </div>
+                <div>
+                    <div style="font-size:1.6rem;font-weight:700;color:#1b4332" id="totalPacientes">--</div>
+                    <div style="font-size:0.8rem;color:#6c757d">Pacientes Activos</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100">
+            <div class="card-body d-flex align-items-center gap-3">
+                <div style="width:50px;height:50px;background:#fff3cd;border-radius:12px;display:flex;align-items:center;justify-content:center;">
+                    <i class="fas fa-bell fa-lg" style="color:#e67700"></i>
+                </div>
+                <div>
+                    <div style="font-size:1.6rem;font-weight:700;color:#1b4332" id="totalAlertas">--</div>
+                    <div style="font-size:0.8rem;color:#6c757d">Alertas Pendientes</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100">
+            <div class="card-body d-flex align-items-center gap-3">
+                <div style="width:50px;height:50px;background:#d1ecf1;border-radius:12px;display:flex;align-items:center;justify-content:center;">
+                    <i class="fas fa-users fa-lg" style="color:#0c5460"></i>
+                </div>
+                <div>
+                    <div style="font-size:1.6rem;font-weight:700;color:#1b4332" id="totalUsuarios">--</div>
+                    <div style="font-size:0.8rem;color:#6c757d">Personal Activo</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100">
+            <div class="card-body d-flex align-items-center gap-3">
+                <div style="width:50px;height:50px;background:#f8d7da;border-radius:12px;display:flex;align-items:center;justify-content:center;">
+                    <i class="fas fa-calendar-check fa-lg" style="color:#721c24"></i>
+                </div>
+                <div>
+                    <div style="font-size:1.6rem;font-weight:700;color:#1b4332" id="totalVisitas">--</div>
+                    <div style="font-size:0.8rem;color:#6c757d">Visitas Hoy</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="fas fa-user-injured me-2"></i>Pacientes Recientes</span>
+                <a href="/Pacientes" class="btn btn-sm btn-light">Ver todos</a>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>EPS</th>
+                            <th>Estado Salud</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaPacientes">
+                        <tr><td colspan="4" class="text-center py-3 text-muted">Cargando...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-bell me-2"></i>Alertas Recientes
+            </div>
+            <div class="card-body p-0">
+                <div id="listaAlertas" style="max-height:300px;overflow-y:auto;">
+                    <div class="text-center py-3 text-muted">Cargando...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <i class="fas fa-link me-2"></i>Accesos Rápidos
+            </div>
+            <div class="card-body d-grid gap-2">
+                <a href="/Pacientes/Create" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i>Nuevo Paciente
+                </a>
+                <a href="/Usuarios/Create" class="btn btn-outline-secondary">
+                    <i class="fas fa-user-plus me-2"></i>Nuevo Usuario
+                </a>
+                <a href="/Alertas" class="btn btn-outline-warning">
+                    <i class="fas fa-bell me-2"></i>Ver Alertas
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        fetch('/Pacientes/GetStats')
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('totalPacientes').textContent = data.pacientes ?? 0;
+                document.getElementById('totalAlertas').textContent = data.alertas ?? 0;
+                document.getElementById('totalUsuarios').textContent = data.usuarios ?? 0;
+                document.getElementById('totalVisitas').textContent = data.visitas ?? 0;
+
+                const tbody = document.getElementById('tablaPacientes');
+                if (data.listaPacientes && data.listaPacientes.length > 0) {
+                    tbody.innerHTML = data.listaPacientes.map(p => `
+                        <tr>
+                            <td>${p.nombre} ${p.apellido}</td>
+                            <td>${p.eps ?? '-'}</td>
+                            <td><span class="badge badge-estable">${p.estadoSalud}</span></td>
+                            <td><span class="badge badge-activo">${p.estado}</span></td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">Sin pacientes</td></tr>';
+                }
+
+                const lista = document.getElementById('listaAlertas');
+                if (data.listaAlertas && data.listaAlertas.length > 0) {
+                    lista.innerHTML = data.listaAlertas.map(a => `
+                        <div style="padding:12px 16px;border-bottom:1px solid #f0f0f0;">
+                            <div style="font-size:0.85rem;font-weight:600;color:#c1121f">${a.tipoAlerta}</div>
+                            <div style="font-size:0.75rem;color:#6c757d">${a.nivelPrioridad} · ${a.estado}</div>
+                        </div>
+                    `).join('');
+                } else {
+                    lista.innerHTML = '<div class="text-center py-3 text-muted">Sin alertas</div>';
+                }
+            })
+            .catch(() => {
+                document.getElementById('totalPacientes').textContent = '0';
+                document.getElementById('totalAlertas').textContent = '0';
+                document.getElementById('totalUsuarios').textContent = '0';
+                document.getElementById('totalVisitas').textContent = '0';
+            });
+    </script>
+}

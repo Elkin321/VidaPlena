@@ -1,0 +1,39 @@
+<form method="post" action="/Historia/Agregar">
+    <input type="hidden" name="idPaciente" value="@Model.idPaciente" />
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label class="form-label fw-bold">Diagnósticos</label>
+            <textarea name="Diagnosticos" class="form-control" rows="3" placeholder="Diagnósticos médicos..."></textarea>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label fw-bold">Medicación</label>
+            <textarea name="Medicacion" class="form-control" rows="3" placeholder="Medicación indicada..."></textarea>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label fw-bold">Alergias</label>
+            <input type="text" name="Alergias" class="form-control" placeholder="Alergias conocidas..." />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label fw-bold">Antecedentes</label>
+            <input type="text" name="Antecedentes" class="form-control" placeholder="Antecedentes médicos..." />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label fw-bold">Alimentación</label>
+            <input type="text" name="Alimentacion" class="form-control" placeholder="Dieta y alimentación..." />
+        </div>
+        <div class="col-md-6">
+            <label class="form-label fw-bold">EPS</label>
+            <input type="text" name="Eps" class="form-control" placeholder="EPS del paciente..." />
+        </div>
+        <div class="col-md-12">
+            <label class="form-label fw-bold">Complemento</label>
+            <textarea name="Complemento" class="form-control" rows="2" placeholder="Información complementaria..."></textarea>
+        </div>
+    </div>
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary px-4">
+            <i class="fas fa-save me-2"></i>Guardar Registro
+        </button>
+        <a href="/Historia/Index/@Model.idPaciente" class="btn btn-outline-secondary ms-2">Cancelar</a>
+    </div>
+</form>

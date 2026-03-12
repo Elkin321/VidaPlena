@@ -1,0 +1,19 @@
+﻿@model VidaPlena.Models.Paciente
+
+<h2>Eliminar Paciente</h2>
+
+<h4>¿Está seguro que desea eliminar este paciente?</h4>
+
+<div>
+    <p><strong>Nombre:</strong> @Model.Nombre</p>
+    <p><strong>Apellido:</strong> @Model.Apellido</p>
+</div>
+
+<form asp-action="Delete">
+
+    <input type="hidden" asp-for="idPaciente" />
+
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+
+</form>

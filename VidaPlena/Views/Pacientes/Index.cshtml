@@ -1,0 +1,77 @@
+﻿@model IEnumerable<VidaPlena.Models.Paciente>
+@{
+    ViewData["Title"] = "Pacientes";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 style="color:#1b4332;font-weight:700;">
+        <i class="fas fa-user-injured me-2"></i>Gestión de Pacientes
+    </h4>
+    <a href="/Pacientes/Create" class="btn btn-primary">
+        <i class="fas fa-plus me-2"></i>Nuevo Paciente
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Grupo Sanguíneo</th>
+                    <th>EPS</th>
+                    <th>Estado Salud</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in Model)
+                {
+                    <tr>
+                        <td>
+                            <div style="font-weight:600">@p.Nombre @p.Apellido</div>
+                        </td>
+                        <td>@(p.GrupoSanguineo ?? "-")</td>
+                        <td>@(p.Eps ?? "-")</td>
+                        <td>
+                            @if (p.EstadoSalud == "Crítico")
+                            {
+                                <span class="badge" style="background:#f8d7da;color:#721c24">⚠️ @p.EstadoSalud</span>
+                            }
+                            else if (p.EstadoSalud == "Estable")
+                            {
+                                <span class="badge" style="background:#d1ecf1;color:#0c5460">✅ @p.EstadoSalud</span>
+                            }
+                            else
+                            {
+                                <span class="badge" style="background:#fff3cd;color:#856404">@p.EstadoSalud</span>
+                            }
+                        </td>
+                        <td>
+                            @if (p.Estado == "Activo")
+                            {
+                                <span class="badge" style="background:#d4edda;color:#155724">Activo</span>
+                            }
+                            else
+                            {
+                                <span class="badge" style="background:#f8d7da;color:#721c24">Inactivo</span>
+                            }
+                        </td>
+                        <td>
+                            <a href="/Historia/Index/@p.idPaciente" class="btn btn-sm btn-info me-1" style="color:white">
+                                <i class="fas fa-file-medical"></i> Historia
+                            </a>
+                            <a href="/Pacientes/Edit/@p.idPaciente" class="btn btn-sm btn-warning me-1">
+                                <i class="fas fa-edit"></i> Editar
+                            </a>
+                            <a href="/Pacientes/Delete/@p.idPaciente" class="btn btn-sm btn-danger">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

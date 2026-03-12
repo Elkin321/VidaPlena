@@ -1,0 +1,33 @@
+﻿@model VidaPlena.Models.Paciente
+
+<h2>Registrar Paciente</h2>
+
+<form asp-action="Create">
+    <div>
+        <label>Hogar</label>
+        <input asp-for="idHogar" />
+    </div>
+
+    <div>
+        <label>Nombre</label>
+        <input asp-for="Nombre" />
+    </div>
+
+    <div>
+        <label>Apellido</label>
+        <input asp-for="Apellido" />
+    </div>
+
+    <div>
+        <label>Genero</label>
+        <input asp-for="Genero" />
+    </div>
+
+    <div>
+        <label>Estado</label>
+        <input asp-for="Estado" />
+    </div>
+
+    <button type="submit">Guardar</button>
+
+</form>

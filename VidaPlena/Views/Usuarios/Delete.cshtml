@@ -1,0 +1,50 @@
+@model VidaPlena.Models.Usuario
+@{
+    ViewData["Title"] = "Eliminar Usuario";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 style="color:#c53030;font-weight:700;">
+        <i class="fas fa-user-times me-2"></i>Eliminar Usuario
+    </h4>
+    <a href="/Usuarios" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i>Volver
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="alert" style="background:#fff5f5;border:1px solid #fed7d7;border-radius:10px;padding:16px;margin-bottom:24px;">
+            <i class="fas fa-exclamation-triangle me-2" style="color:#c53030"></i>
+            <strong style="color:#c53030">¿Estás seguro que deseas eliminar este usuario?</strong>
+            <p style="color:#6c757d;margin:8px 0 0 0;font-size:0.9rem">Esta acción no se puede deshacer.</p>
+        </div>
+
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                <label class="form-label fw-bold text-muted">Nombre Completo</label>
+                <p class="form-control-plaintext fw-bold">@Model.Nombre @Model.Apellido</p>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-bold text-muted">Email</label>
+                <p class="form-control-plaintext">@Model.Email</p>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-bold text-muted">Rol</label>
+                <p class="form-control-plaintext">@Model.Rol</p>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-bold text-muted">Estado</label>
+                <p class="form-control-plaintext">@(Model.Activo == true ? "Activo" : "Inactivo")</p>
+            </div>
+        </div>
+
+        <form method="post" action="/Usuarios/Delete">
+            <input type="hidden" name="id" value="@Model.idUsuario"/>
+            <button type="submit" class="btn btn-danger px-4">
+                <i class="fas fa-trash me-2"></i>Sí, Eliminar
+            </button>
+            <a href="/Usuarios" class="btn btn-outline-secondary ms-2">Cancelar</a>
+        </form>
+    </div>
+</div>

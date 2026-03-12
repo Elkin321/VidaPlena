@@ -1,0 +1,126 @@
+@model VidaPlena.Models.Paciente
+@{
+    ViewData["Title"] = "Historia Clínica";
+    bool puedeEditar = ViewBag.PuedeEditar ?? false;
+    string rol = ViewBag.Rol ?? "";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 style="color:#1b4332;font-weight:700;">
+        <i class="fas fa-file-medical me-2"></i>Historia Clínica — @Model.Nombre @Model.Apellido
+    </h4>
+    <div class="d-flex gap-2">
+        @if (puedeEditar)
+        {
+            <a href="/Historia/Agregar/@Model.idPaciente" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i>Agregar Registro
+            </a>
+        }
+        <a href="/Pacientes/Index" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Volver
+        </a>
+    </div>
+</div>
+
+<!-- Info del paciente -->
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-user me-2"></i>Datos del Paciente
+    </div>
+    <div class="card-body">
+        <div class="row g-3">
+            <div class="col-md-3">
+                <div style="font-size:0.75rem;color:#6c757d;text-transform:uppercase;font-weight:600">Nombre Completo</div>
+                <div style="font-weight:600">@Model.Nombre @Model.Apellido</div>
+            </div>
+            <div class="col-md-3">
+                <div style="font-size:0.75rem;color:#6c757d;text-transform:uppercase;font-weight:600">Fecha Nacimiento</div>
+                <div>@Model.FechaNacimiento.ToString("dd/MM/yyyy")</div>
+            </div>
+            <div class="col-md-3">
+                <div style="font-size:0.75rem;color:#6c757d;text-transform:uppercase;font-weight:600">EPS</div>
+                <div>@(Model.Eps ?? "No registrada")</div>
+            </div>
+            <div class="col-md-3">
+                <div style="font-size:0.75rem;color:#6c757d;text-transform:uppercase;font-weight:600">Grupo Sanguíneo</div>
+                <div>@(Model.GrupoSanguineo ?? "No registrado")</div>
+            </div>
+            <div class="col-md-3">
+                <div style="font-size:0.75rem;color:#6c757d;text-transform:uppercase;font-weight:600">Estado Salud</div>
+                <div>
+                    @if (Model.EstadoSalud == "Crítico")
+                    {
+                        <span class="badge" style="background:#f8d7da;color:#721c24">⚠️ @Model.EstadoSalud</span>
+                    }
+                    else
+                    {
+                        <span class="badge" style="background:#d1ecf1;color:#0c5460">✅ @Model.EstadoSalud</span>
+                    }
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div style="font-size:0.75rem;color:#6c757d;text-transform:uppercase;font-weight:600">Fecha Ingreso</div>
+                <div>@Model.FechaIngreso.ToString("dd/MM/yyyy")</div>
+            </div>
+            @if (!string.IsNullOrEmpty(Model.Observaciones))
+            {
+                <div class="col-md-6">
+                    <div style="font-size:0.75rem;color:#6c757d;text-transform:uppercase;font-weight:600">Observaciones</div>
+                    <div>@Model.Observaciones</div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Historial clínico -->
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="fas fa-history me-2"></i>Historial Clínico</span>
+        <span class="badge" style="background:rgba(255,255,255,0.2)">
+            @(Model.PacientesInformacion?.Count() ?? 0) registros
+        </span>
+    </div>
+    <div class="card-body p-0">
+        @if (Model.PacientesInformacion != null && Model.PacientesInformacion.Any())
+        {
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Diagnósticos</th>
+                        <th>Medicación</th>
+                        <th>Alergias</th>
+                        <th>Antecedentes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var info in Model.PacientesInformacion.OrderByDescending(i => i.FechaCreacion))
+                    {
+                        <tr>
+                            <td style="white-space:nowrap">@info.FechaCreacion?.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@(info.Diagnosticos ?? "-")</td>
+                            <td>@(info.Medicacion ?? "-")</td>
+                            <td>@(info.Alergias ?? "-")</td>
+                            <td>@(info.Antecedentes ?? "-")</td>
+                        </tr>
+                    }
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="text-center py-4 text-muted">
+                <i class="fas fa-file-medical fa-2x mb-2 d-block"></i>
+                No hay registros clínicos aún.
+                @if (puedeEditar)
+                {
+                    <a href="/Historia/Agregar/@Model.idPaciente" class="btn btn-sm btn-primary mt-2">
+                        <i class="fas fa-plus me-1"></i>Agregar primer registro
+                    </a>
+                }
+            </div>
+        }
+    </div>
+</div>

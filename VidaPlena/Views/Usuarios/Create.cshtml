@@ -1,0 +1,73 @@
+@model VidaPlena.Models.Usuario
+@{
+    ViewData["Title"] = "Nuevo Usuario";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 style="color:#1b4332;font-weight:700;">
+        <i class="fas fa-user-plus me-2"></i>Nuevo Usuario
+    </h4>
+    <a href="/Usuarios" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i>Volver
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post" action="/Usuarios/Create">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Nombre</label>
+                    <input type="text" name="Nombre" class="form-control" required/>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Apellido</label>
+                    <input type="text" name="Apellido" class="form-control" required/>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Email</label>
+                    <input type="email" name="Email" class="form-control" required/>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Contraseña</label>
+                    <input type="password" name="Contrasena" class="form-control" required/>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Rol</label>
+                    <select name="Rol" class="form-select" required>
+                        <option value="">-- Seleccione --</option>
+                        <option value="Administrador">Administrador</option>
+                        <option value="Medico">Médico</option>
+                        <option value="Enfermero">Enfermero</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Género</label>
+                    <select name="Genero" class="form-select" required>
+                        <option value="">-- Seleccione --</option>
+                        <option value="M">Masculino</option>
+                        <option value="F">Femenino</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">ID Hogar</label>
+                    <input type="number" name="idHogar" class="form-control" value="1" required/>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Teléfono</label>
+                    <input type="text" name="Telefono" class="form-control"/>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Especialidad</label>
+                    <input type="text" name="Especialidad" class="form-control"/>
+                </div>
+            </div>
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary px-4">
+                    <i class="fas fa-save me-2"></i>Guardar Usuario
+                </button>
+                <a href="/Usuarios" class="btn btn-outline-secondary ms-2">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>

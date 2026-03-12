@@ -1,0 +1,309 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - VidaPlena</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/VidaPlena.styles.css" asp-append-version="true" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        :root {
+            --verde-oscuro: #1b4332;
+            --verde-medio: #2d6a4f;
+            --verde-claro: #40916c;
+            --verde-suave: #95d5b2;
+            --verde-palido: #d8f3dc;
+            --blanco: #ffffff;
+        }
+
+        body {
+            background-color: #f0f4f8;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 260px;
+            min-height: 100vh;
+            background: linear-gradient(180deg, var(--verde-oscuro) 0%, var(--verde-medio) 100%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            padding: 0;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.2);
+        }
+
+        .sidebar-brand {
+            padding: 24px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+            .sidebar-brand h1 {
+                color: white;
+                font-size: 1.6rem;
+                font-weight: 800;
+                margin: 0;
+            }
+
+                .sidebar-brand h1 span {
+                    color: var(--verde-suave);
+                }
+
+            .sidebar-brand p {
+                color: rgba(255,255,255,0.6);
+                font-size: 0.7rem;
+                margin: 4px 0 0 0;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+            }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .sidebar-section {
+            padding: 8px 20px 4px;
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: rgba(255,255,255,0.75);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+            .sidebar-menu a:hover,
+            .sidebar-menu a.active {
+                background: rgba(255,255,255,0.1);
+                color: white;
+                border-left-color: var(--verde-suave);
+            }
+
+            .sidebar-menu a i {
+                width: 18px;
+                text-align: center;
+                font-size: 0.95rem;
+            }
+
+        /* MAIN CONTENT */
+        .main-content {
+            margin-left: 260px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* TOP BAR */
+        .topbar {
+            background: white;
+            padding: 14px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-bottom: 1px solid #e9ecef;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+
+        .topbar-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #4a5568;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            background: var(--verde-medio);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* PAGE CONTENT */
+        .page-content {
+            padding: 30px;
+            flex-grow: 1;
+        }
+
+        /* CARDS */
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+        }
+
+        .card-header {
+            background: var(--verde-oscuro);
+            color: white;
+            border-radius: 12px 12px 0 0 !important;
+            padding: 16px 20px;
+            font-weight: 600;
+        }
+
+        /* BUTTONS */
+        .btn-primary {
+            background-color: var(--verde-medio);
+            border-color: var(--verde-medio);
+        }
+
+            .btn-primary:hover {
+                background-color: var(--verde-oscuro);
+                border-color: var(--verde-oscuro);
+            }
+
+        .btn-success {
+            background-color: var(--verde-claro);
+            border-color: var(--verde-claro);
+        }
+
+        /* TABLES */
+        .table thead th {
+            background-color: var(--verde-palido);
+            color: var(--verde-oscuro);
+            font-weight: 600;
+            border: none;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: var(--verde-palido);
+        }
+
+        /* BADGES */
+        .badge-activo {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .badge-critico {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .badge-estable {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+
+        /* FOOTER */
+        .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 16px 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+            font-size: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="sidebar-brand">
+            <h1>Vida<span>Plena</span></h1>
+            <p>Sistema de Gestión Geriátrica</p>
+        </div>
+
+        <div class="sidebar-menu">
+            <div class="sidebar-section">Principal</div>
+            
+            <a href="/Home/Index" class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+
+            <a href="/Pacientes/Index" class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Pacientes" ? "active" : "")">
+                <i class="fas fa-user-injured"></i> Pacientes
+            </a>
+            <a href="/Usuarios/Index" class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Usuarios" ? "active" : "")">
+                <i class="fas fa-users"></i> Usuarios
+            </a>
+            <a href="/Familiares/Index" class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Familiares" ? "active" : "")">
+                <i class="fas fa-people-arrows"></i> Familiares
+            </a>
+
+            <a href="/Medicaciones/Index" class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Medicaciones" ? "active" : "")">
+                <i class="fas fa-pills"></i> Medicación
+            </a>
+            <a href="/SignosVitales/Index" class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "SignosVitales" ? "active" : "")">
+                <i class="fas fa-heartbeat"></i> Signos Vitales
+            </a>
+            <a href="/Alertas/Index" class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Alertas" ? "active" : "")">
+                <i class="fas fa-bell"></i> Alertas
+            </a>
+
+            <a href="/Turnos/Index" class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Turnos" ? "active" : "")">
+                <i class="fas fa-clock"></i> Turnos
+            </a>
+            <a href="/Visitas/Index" class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Visitas" ? "active" : "")">
+                <i class="fas fa-calendar-check"></i> Visitas
+            </a>
+            <div class="sidebar-section">Operativo</div>
+            <a href="/Turnos" class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Turnos" ? "active" : "")">
+                <i class="fas fa-clock"></i> Turnos
+            </a>
+            <a href="/Visitas" class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Visitas" ? "active" : "")">
+                <i class="fas fa-calendar-check"></i> Visitas
+            </a>
+        </div>
+
+        <div class="sidebar-footer">
+            &copy; 2026 VidaPlena · IUSH
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="topbar">
+            <div class="topbar-title">
+                <i class="fas fa-hospital-alt me-2" style="color:var(--verde-claro)"></i>
+                @ViewData["Title"]
+            </div>
+            <div class="topbar-user">
+                <div class="user-avatar">
+                    @(Context.Session.GetString("UsuarioRol")?.Substring(0, 1) ?? "V")
+                </div>
+                <span>@(Context.Session.GetString("UsuarioNombre") ?? "Usuario")</span>
+                <a href="/Account/Logout" class="btn btn-sm ms-2" style="background:#f8d7da;color:#721c24;border:none;">
+                    <i class="fas fa-sign-out-alt me-1"></i>Salir
+                </a>
+            </div>
+        </div>
+        <div class="page-content">
+            @RenderBody()
+        </div>
+
+        <footer style="padding:16px 30px; color:#aaa; font-size:0.8rem; border-top:1px solid #e9ecef; background:white;">
+            &copy; 2026 VidaPlena — Institución Universitaria Salazar y Herrera · IUSH
+        </footer>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
